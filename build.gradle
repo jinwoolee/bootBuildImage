@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.1.1'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id "com.palantir.docker" version "0.35.0"
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+bootJar {
+    archiveFileName = "demo.jar"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+docker {
+    dockerfile file('Dockerfile')
+    name 'pms.lg.or.kr:5000/ljw/demo:test'
+    //tag 'tagg', "pms.lg.or.kr:5000"
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
